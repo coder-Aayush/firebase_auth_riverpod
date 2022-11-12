@@ -1,0 +1,49 @@
+name: firebase_auth_riverpod
+description: A new Flutter project.
+
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=2.18.4 <3.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+
+  cupertino_icons: ^1.0.2
+
+  # flutter_hooks with flutter_riverpod
+  hooks_riverpod: ^2.1.1
+
+
+  # firebase
+  firebase_core: ^2.1.1
+  firebase_auth: ^4.1.0
+
+
+  # google signin
+  google_sign_in: ^5.4.2
+
+  # data class
+  freezed_annotation: ^2.2.0
+
+
+
+  # functional programming
+  dartz: ^0.10.1
+  
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^2.0.0
+  build_runner: ^2.3.2
+  freezed: ^2.2.1
+
+flutter:
+
+  uses-material-design: true
+
