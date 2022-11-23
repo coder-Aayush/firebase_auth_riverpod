@@ -33,6 +33,9 @@ dependencies:
 
   # functional programming
   dartz: ^0.10.1
+
+  # ui
+  flutter_signin_button: ^2.0.0
   
 
 dev_dependencies:

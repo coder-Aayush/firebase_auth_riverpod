@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth_riverpod/firebase_options.dart';
 import 'package:firebase_auth_riverpod/src/core/providers/firebase_providers.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -36,7 +37,8 @@ class AuthDataSource {
 
   Future<Either<String, User>> continueWithGoogle() async {
     try {
-      final googleSignIn = GoogleSignIn();
+      final googleSignIn =
+          GoogleSignIn(clientId: DefaultFirebaseOptions.ios.iosClientId);
       final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
       if (googleUser != null) {
         final GoogleSignInAuthentication googleAuth =
