@@ -85,7 +85,7 @@ class CustomButton extends StatelessWidget {
               decoration: ShapeDecoration(
                 shape: _shape,
                 color:
-                    isDisabled ? Colors.red.withOpacity(.6) : backgroundColor,
+                    isDisabled ? Colors.grey.withOpacity(.6) : backgroundColor,
               ),
               child: loading
                   ? const Center(

@@ -1,5 +1,7 @@
 import 'package:firebase_auth_riverpod/src/core/widgets/custom_button.dart';
+import 'package:firebase_auth_riverpod/src/core/widgets/custom_text_field.dart';
 import 'package:firebase_auth_riverpod/src/feature/auth/providers/authentication_provider.dart';
+import 'package:firebase_auth_riverpod/src/feature/auth/providers/form/login_form_provider.dart';
 import 'package:firebase_auth_riverpod/src/feature/auth/views/signup_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/button_list.dart';
@@ -46,30 +48,52 @@ class LoginView extends HookConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              TextField(
-                controller: email,
-                decoration: const InputDecoration(hintText: 'Email'),
+              Consumer(
+                builder: (context, ref, _) {
+                  final emailField =
+                      ref.watch(loginFormNotifierProvider).form.email;
+                  return CustomTextField(
+                    onChanged: (value) => ref
+                        .read(loginFormNotifierProvider.notifier)
+                        .setEmail(value),
+                    controller: email,
+                    hintText: 'Email',
+                    errorMessage: emailField.errorMessage,
+                  );
+                },
               ),
               const SizedBox(height: 30),
-              TextField(
-                controller: password,
-                obscureText: true,
-                decoration: const InputDecoration(hintText: 'Password'),
-              ),
+              Consumer(builder: (context, ref, _) {
+                final passwordField =
+                    ref.watch(loginFormNotifierProvider).form.password;
+                return CustomTextField(
+                  onChanged: (value) => ref
+                      .read(loginFormNotifierProvider.notifier)
+                      .setPassword(value),
+                  controller: password,
+                  errorMessage: passwordField.errorMessage,
+                  isPassword: true,
+                  hintText: 'Password',
+                );
+              }),
               const SizedBox(height: 40),
               Center(
-                child: CustomButton(
-                  isDisabled: false,
-                  title: 'Sign in',
-                  loading: ref
-                      .watch(authNotifierProvider)
-                      .maybeWhen(orElse: () => false, loading: () => true),
-                  onPressed: () =>
-                      ref.read(authNotifierProvider.notifier).login(
-                            email: email.text,
-                            password: password.text,
-                          ),
-                ),
+                child: Consumer(builder: (context, ref, _) {
+                  final field = ref.watch(loginFormNotifierProvider).form;
+                  return CustomButton(
+                    isDisabled:
+                        !(field.password.isValid && field.email.isValid),
+                    title: 'Sign in',
+                    loading: ref
+                        .watch(authNotifierProvider)
+                        .maybeWhen(orElse: () => false, loading: () => true),
+                    onPressed: () =>
+                        ref.read(authNotifierProvider.notifier).login(
+                              email: email.text,
+                              password: password.text,
+                            ),
+                  );
+                }),
               ),
               const SizedBox(height: 40),
               Row(
